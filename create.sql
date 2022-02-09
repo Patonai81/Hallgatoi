@@ -1,0 +1,10 @@
+create sequence hibernate_sequence start 1 increment 1;
+create table course (id int8 not null, name varchar(255), primary key (id));
+create table course_participate (id int8 not null, course_id int8 not null);
+create table course_teaches (id int8 not null, course_id int8 not null);
+create table student (id int8 not null, birth_date date, name varchar(255), semester int4 not null, primary key (id));
+create table teacher (id int8 not null, birth_date date, name varchar(255), primary key (id));
+alter table if exists course_participate add constraint FKff3mtcn7v046bbla2wuhu5s70 foreign key (course_id) references course;
+alter table if exists course_participate add constraint FK6821pvc3la3sl85lqr9ud2mis foreign key (id) references student;
+alter table if exists course_teaches add constraint FKl7p6owiuycf98j67cy0i4mo8k foreign key (course_id) references course;
+alter table if exists course_teaches add constraint FKleerujgxcfiac63lpn0yw4isl foreign key (id) references teacher;

@@ -1,0 +1,19 @@
+insert into course_participate values (1,1);
+insert into course_participate values (1,3);
+insert into course_participate values (1,4);
+insert into course_participate values (2,1);
+insert into course_participate values (2,2);
+insert into course_participate values (3,1);
+insert into course_participate values (3,2);
+insert into course_participate values (3,3);
+insert into course_participate values (4,3);
+
+insert into  course_teaches values (1,1);
+insert into  course_teaches values (1,2);
+insert into  course_teaches values (1,3);
+insert into  course_teaches values (2,1);
+insert into  course_teaches values (2,4);
+insert into  course_teaches values (3,3);
+insert into  course_teaches values (3,4);
+insert into  course_teaches values (4,1);
+insert into  course_teaches values (4,4);
