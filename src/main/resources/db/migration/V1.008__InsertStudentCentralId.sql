@@ -1,0 +1,1 @@
+update student set central_id=floor(random() * 100000 + 1)::int;

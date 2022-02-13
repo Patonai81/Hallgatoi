@@ -2,6 +2,7 @@ package hu.webuni.nyilvantarto.service;
 
 import com.google.common.collect.ImmutableList;
 import com.querydsl.core.types.Predicate;
+import hu.webuni.nyilvantarto.aspect.FaultRetry;
 import hu.webuni.nyilvantarto.model.Course;
 import hu.webuni.nyilvantarto.model.QCourse;
 import hu.webuni.nyilvantarto.repository.CourseRepository;
@@ -23,6 +24,7 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
+    @FaultRetry
     public List<Course> findCourses(Course input) {
         CoursePredicate coursePredicate = new CoursePredicate(input);
         return ImmutableList.copyOf(courseRepository.findAll(coursePredicate.toPredicate()));

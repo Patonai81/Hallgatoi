@@ -21,6 +21,11 @@ public class Student {
     private LocalDate birthDate;
     private int semester;
 
+    @Column(name = "central_id")
+    private int central_id;
+    @Column(name = "used_free_semesters")
+    private int used_free_semesters;
+
 
     @ManyToMany
     @JoinTable(
