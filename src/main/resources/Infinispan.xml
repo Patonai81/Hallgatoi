@@ -14,11 +14,11 @@
     <!-- This configuration is suitable for non-clustered environments, where only single instance accesses the DB -->
     <cache-container name="SpringCacheManager" >
         <!-- Default configuration is appropriate for entity/collection caching. -->
-        <local-cache-configuration name="course">
+        <local-cache name="course">
             <transaction mode="NONE" />
             <expiration max-idle="5000" interval="1000"/>
             <memory max-count="10000"/>
-        </local-cache-configuration>
+        </local-cache>
 </cache-container>
 
 </infinispan>
