@@ -31,42 +31,17 @@ public class StudentService {
     @Autowired
     SchedulerConfig schedulerConfig;
 
+    @Autowired
+    UpdateJobService updateJobService;
+
    // @Scheduled(cron = "*/3 * * * * *")
   //  @Transactional
     @PostConstruct
     public void startUpdateRemainingSemestersTimer() {
         CronTrigger cronTrigger = new CronTrigger(schedulerConfig.getSchedule().getCronTiming());
-        taskScheduler.schedule(() -> {
-
-            studentRepository.findAll().forEach(student -> {
-                updateStudent(student);
-            });
-
-            System.out.println("Updates were successfull");
-        }, cronTrigger);
+        taskScheduler.schedule(updateJobService, cronTrigger);
     }
 
-
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public void updateStudent(Student student) {
-        student.setUsed_free_semesters(getRemainingSemester(student.getCentral_id()));
-        studentRepository.save(student);
-
-    }
-
-    @Transactional
-    public int getRemainingSemester(Integer id){
-        vvv();
-       return remainingFreeSemesterService.getRemainingSemester(id);
-
-    }
-
-    @Async
-    @FaultRetry
-    public int vvv(){
-        System.out.println("VVV called");
-        return 0;
-    }
 
 
 }

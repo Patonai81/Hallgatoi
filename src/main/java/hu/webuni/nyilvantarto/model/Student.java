@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Cacheable
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

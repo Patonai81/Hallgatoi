@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Cacheable
+
 public class Teacher {
 
     @Id

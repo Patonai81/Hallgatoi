@@ -1,11 +1,9 @@
 package hu.webuni.nyilvantarto.aspect;
 
 import hu.webuni.nyilvantarto.exception.BackendNotAvailableException;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +12,17 @@ import org.springframework.stereotype.Component;
 public class FaultRetryAspect {
 
 
-    @Around("@annotation(hu.webuni.nyilvantarto.aspect.FaultRetry)")
+    @Pointcut("@annotation(hu.webuni.nyilvantarto.aspect.FaultRetry) ||  @within(hu.webuni.nyilvantarto.aspect.FaultRetry)")
+    public void myPointCut (){
+    }
+
+
+    @Around(
+            "hu.webuni.nyilvantarto.aspect.FaultRetryAspect.myPointCut()"
+    )
+
     public Object retry(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("Szabi initialized");
+        System.out.println("Fault Retry aspect initialized");
         int retryCnt = 5;
         return retry(proceedingJoinPoint, retryCnt);
     }
