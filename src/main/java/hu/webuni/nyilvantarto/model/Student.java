@@ -2,19 +2,20 @@ package hu.webuni.nyilvantarto.model;
 
 import lombok.Data;
 import lombok.ToString;
+import org.apache.commons.lang3.builder.HashCodeExclude;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Audited
 @Data
 @Entity
-
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    @ToString.Exclude
     private Long id;
 
     private String name;
@@ -32,6 +33,7 @@ public class Student {
             name = "course_participate",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @HashCodeExclude
     List<Course> courses;
 
 }

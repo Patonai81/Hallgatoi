@@ -3,14 +3,15 @@ package hu.webuni.nyilvantarto.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Audited
 @Data
 @Entity
-
 public class Teacher {
 
     @Id

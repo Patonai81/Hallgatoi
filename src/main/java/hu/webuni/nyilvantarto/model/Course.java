@@ -1,11 +1,15 @@
 package hu.webuni.nyilvantarto.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.builder.HashCodeExclude;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Audited
 @Entity
 @Data
 @NamedEntityGraph(name = "Course.teacher", attributeNodes = @NamedAttributeNode(value = "teacherList"))
@@ -20,11 +24,11 @@ public class Course {
 
 
     @ManyToMany(mappedBy = "courses",fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Set<Student> studentList;
 
     @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Set<Teacher> teacherList;
 
 
