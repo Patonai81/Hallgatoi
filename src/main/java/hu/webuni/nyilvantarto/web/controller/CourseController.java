@@ -1,4 +1,5 @@
 package hu.webuni.nyilvantarto.web.controller;
+
 import com.google.common.collect.ImmutableList;
 import com.querydsl.core.types.Predicate;
 import hu.webuni.nyilvantarto.dto.CourseDTO;
@@ -14,7 +15,9 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,13 +40,13 @@ public class CourseController {
     }
 
     @PostMapping("/findCourse2")
-    public List<CourseDTO> findCourse2(@QuerydslPredicate (root = Course.class) Predicate predicate, @RequestParam Optional<Boolean> full, @SortDefault("name") Pageable pageable) {
+    public List<CourseDTO> findCourse2(@QuerydslPredicate(root = Course.class) Predicate predicate, @RequestParam Optional<Boolean> full, @SortDefault("name") Pageable pageable) {
         boolean isFull = full.orElse(false);
-        List<Course> courseList= isFull ?
-             courseService.findCoursesWithStudentANDTeachers(predicate, pageable.getSort()) :
-             courseRepository.findAll(predicate,pageable).getContent();
+        List<Course> courseList = isFull ?
+                courseService.findCoursesWithStudentANDTeachers(predicate, pageable.getSort()) :
+                courseRepository.findAll(predicate, pageable).getContent();
 
-        return  isFull ? courseMapper.toCourseDTOListFull(courseList) : courseMapper.toCourseDTOListBasic(courseList);
+        return isFull ? courseMapper.toCourseDTOListFull(courseList) : courseMapper.toCourseDTOListBasic(courseList);
     }
 
     @GetMapping("/findCourse/{id}")
@@ -57,7 +60,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteCourse(@PathVariable("id") Long id){
+    public void deleteCourse(@PathVariable("id") Long id) {
         courseService.delete(id);
         System.out.println("Operation delete successfully done");
     }
@@ -65,21 +68,29 @@ public class CourseController {
     @GetMapping("/findCourseHistory/{id}")
     public List<HistoryData<CourseDTO>> findCourseHistoryById(@PathVariable("id") Long id) {
 
-    List <HistoryData<Course>> resultService = courseService.getHistoryOfCourse(id);
-    List <HistoryData<CourseDTO>> result = new ArrayList<>();
+        List<HistoryData<Course>> resultService = courseService.getHistoryOfCourse(id);
+        List<HistoryData<CourseDTO>> result = new ArrayList<>();
 
-    resultService.stream().forEach( item -> {
-        result.add( new HistoryData<>(
-           courseMapper.toCourseDTOFull(item.getEntity()),
-           item.getRevisionType(),
-           item.getRevision(),
-           item.getDate()
-        ));
-    });
+        resultService.stream().forEach(item -> {
+            result.add(new HistoryData<>(
+                    courseMapper.toCourseDTOFull(item.getEntity()),
+                    item.getRevisionType(),
+                    item.getRevision(),
+                    item.getDate()
+            ));
+        });
 
-    return  result;
+        return result;
     }
 
+    @GetMapping("/findCourseHistoryByTime/{id}/entity/{time}")
+    public CourseDTO findCourseEntityInGivenTimeFrame(@PathVariable("id") Long id,@PathVariable("time") LocalDateTime timeOfEntity) {
+
+        Optional<Course> resultOptional = courseService.getHistoryOfCourseAtDate(timeOfEntity,id);
+        if (!resultOptional.isEmpty())
+            return courseMapper.toCourseDTOFull(resultOptional.get());
+        return null;
+    }
 
 
 }

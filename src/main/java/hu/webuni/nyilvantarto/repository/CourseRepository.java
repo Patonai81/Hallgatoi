@@ -9,15 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
+import org.springframework.data.repository.history.RevisionRepository;
 
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
 
 public interface CourseRepository extends JpaRepository<Course, Long>, QuerydslPredicateExecutor<Course>, QuerydslBinderCustomizer<QCourse>,
-        QueryDslMethodCustomiser<Course>{
+        QueryDslMethodCustomiser<Course>/*, RevisionRepository<Course,Long,Long>*/ {
 
 
     @EntityGraph( attributePaths = {"studentList"}, type = EntityGraph.EntityGraphType.LOAD)

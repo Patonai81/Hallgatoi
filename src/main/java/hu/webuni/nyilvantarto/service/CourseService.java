@@ -9,19 +9,26 @@ import hu.webuni.nyilvantarto.model.QCourse;
 import hu.webuni.nyilvantarto.model.Student;
 import hu.webuni.nyilvantarto.repository.CourseRepository;
 import hu.webuni.nyilvantarto.repository.predicate.CoursePredicate;
+import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+import org.hibernate.envers.query.criteria.AuditCriterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.history.Revision;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.JoinType;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,7 +92,7 @@ public class CourseService {
     @SuppressWarnings({"rawtypes","unchecked"})
     public List<HistoryData<Course>> getHistoryOfCourse(Long id){
 
-        List result = AuditReaderFactory.get(entityManager).createQuery().forRevisionsOfEntity(Course.class,false,true)
+        List result = getAuditReader().createQuery().forRevisionsOfEntity(Course.class,false,true)
                 .add(AuditEntity.property("course_id").eq(id)).getResultList()
                 .stream().map( item -> {
                     Object[] itemTmb = (Object[]) item;
@@ -108,10 +115,27 @@ public class CourseService {
 
     @Transactional
     @SuppressWarnings({"rawtypes","unchecked"})
-    public List<HistoryData<Course>> getHistoryOfCourse2(Long id) {
+    public Optional <Course> getHistoryOfCourseAtDate(LocalDateTime timeOfEntity, Long entityID) {
 
-    //AuditReaderFactory.get(entityManager).createQuery().forEntitiesAtRevision()
-return  null;
+        AuditQuery query = getAuditReader().createQuery()
+                .forRevisionsOfEntity( Course.class, true, false )
+                .add( AuditEntity.revisionProperty( "timestamp" ).le(timeOfEntity.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()))
+                .add(AuditEntity.property("course_id").eq(entityID))
+                .addOrder(AuditEntity.revisionProperty( "timestamp" ).desc());
+
+        List<Course> result = query.getResultList();
+        if (result != null) {
+            Course tmp = result.get(0);
+            tmp.getStudentList().size();
+            tmp.getTeacherList().size();
+            return Optional.of(tmp);
+        }
+
+        return Optional.empty();
     }
 
+    private AuditReader getAuditReader() {
+        return AuditReaderFactory.get(entityManager);
     }
+
+}
