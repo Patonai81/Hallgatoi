@@ -1,17 +1,19 @@
 package hu.webuni.nyilvantarto.web.controller;
 
-
-import hu.webuni.nyilvantarto.dto.StudentDTO;
+import hu.webuni.nyilvantarto.api.StudentControllerApi;
 import hu.webuni.nyilvantarto.mapper.StudentMapper;
+import hu.webuni.nyilvantarto.model.StudentDTO;
 import hu.webuni.nyilvantarto.repository.StudentRepository;
 import hu.webuni.nyilvantarto.service.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequiredArgsConstructor
+public class StudentController implements StudentControllerApi {
 
-@RequestMapping("/api/student")
-@RestController("StundentController")
-public class StudentController{
 
     @Autowired
     StudentRepository studentRepository;
@@ -22,20 +24,19 @@ public class StudentController{
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/find/{id}")
-    public StudentDTO findStudentById(@PathVariable("id") Long id){
-        return  studentMapper.toStudentDTO(studentRepository.findStudentByOwnId(id));
+    @Override
+    public ResponseEntity<StudentDTO> addStudent(StudentDTO studentDTO) {
+        return ResponseEntity.ok(studentMapper.toStudentDTO(studentService.insert(studentMapper.toStudent(studentDTO))));
     }
 
-    @PostMapping("/add")
-    public StudentDTO addStudent(@RequestBody StudentDTO studentDTO) {
-        return studentMapper.toStudentDTO(studentService.insert(studentMapper.toStudent(studentDTO)));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void deleteStudentById(@PathVariable("id") Long id){
+    @Override
+    public ResponseEntity<Void> deleteStudentById(Long id) {
         studentService.delete(id);
-        System.out.println("Operation delete successfully done");
+        return ResponseEntity.ok().build();
     }
 
+    @Override
+    public ResponseEntity<StudentDTO> findStudentById1(Long id) {
+        return ResponseEntity.ok(studentMapper.toStudentDTO(studentRepository.findStudentByOwnId(id)));
+    }
 }

@@ -1,7 +1,8 @@
 package hu.webuni.nyilvantarto.mapper;
 
-import hu.webuni.nyilvantarto.dto.StudentDTO;
+
 import hu.webuni.nyilvantarto.model.Student;
+import hu.webuni.nyilvantarto.model.StudentDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

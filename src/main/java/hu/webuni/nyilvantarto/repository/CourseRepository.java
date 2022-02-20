@@ -23,7 +23,7 @@ public interface CourseRepository extends JpaRepository<Course, Long>, QuerydslP
     @Query("SELECT c from Course c")
     public Set<Course> findCoursesWithStudents();
 
-    @EntityGraph( attributePaths = {"studentList"}, type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph( attributePaths = {"teacherList"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT c from Course c")
     public Set<Course> findCoursesWithTeachers();
 

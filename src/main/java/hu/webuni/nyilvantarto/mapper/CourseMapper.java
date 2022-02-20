@@ -1,7 +1,8 @@
 package hu.webuni.nyilvantarto.mapper;
 
-import hu.webuni.nyilvantarto.dto.CourseDTO;
+
 import hu.webuni.nyilvantarto.model.Course;
+import hu.webuni.nyilvantarto.model.CourseDTO;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
