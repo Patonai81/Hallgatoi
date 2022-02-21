@@ -1,0 +1,1 @@
+create table file (id int8 not null, content_id varchar(255), content_length int8 not null, content_mime_type varchar(255), created timestamp, name varchar(255), summary varchar(255), primary key (id));

@@ -1,0 +1,585 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/register",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/student/add": {
+      "post": {
+        "tags": [
+          "student-controller"
+        ],
+        "operationId": "addStudent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/course/findCourse": {
+      "post": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "findCourse",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CourseDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/course/findCourse2": {
+      "post": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "findCourse2",
+        "parameters": [
+          {
+            "name": "full",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "page"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "size"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "in": "query",
+            "name": "id"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/course/add": {
+      "post": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "addCourse",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CourseDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/teacher/find/{id}": {
+      "get": {
+        "tags": [
+          "teacher-controller"
+        ],
+        "operationId": "findStudentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/student/find/{id}": {
+      "get": {
+        "tags": [
+          "student-controller"
+        ],
+        "operationId": "findStudentById_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/course/findCourseHistoryByTime/{id}/entity/{time}": {
+      "get": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "findCourseEntityInGivenTimeFrame",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "time",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/course/findCourseHistory/{id}": {
+      "get": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "findCourseHistoryById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HistoryDataCourseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/course/findCourse/{id}": {
+      "get": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "findCourseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/student/delete/{id}": {
+      "delete": {
+        "tags": [
+          "student-controller"
+        ],
+        "operationId": "deleteStudentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/course/delete/{id}": {
+      "delete": {
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "deleteCourse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/student/{id}/images": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "student-controller"
+        ],
+        "summary": "",
+        "operationId": "uploadStudentImage",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/images/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "image-controller"
+        ],
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "downloadImage"
+      },
+      "delete": {
+        "tags": [
+          "image-controller"
+        ],
+        "summary": "",
+        "operationId": "deleteImage",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StudentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "semester": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CourseDTO": {
+        "type": "object",
+        "properties": {
+          "course_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "studentList": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentDTO"
+            }
+          },
+          "teacherList": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherDTO"
+            }
+          }
+        }
+      },
+      "TeacherDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "HistoryDataCourseDTO": {
+        "type": "object",
+        "properties": {
+          "entity": {
+            "$ref": "#/components/schemas/CourseDTO"
+          },
+          "revisionType": {
+            "type": "string",
+            "enum": [
+              "ADD",
+              "MOD",
+              "DEL"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
