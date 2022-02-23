@@ -3,10 +3,7 @@ package hu.webuni.nyilvantarto.service;
 import com.google.common.collect.ImmutableList;
 import com.querydsl.core.types.Predicate;
 import hu.webuni.nyilvantarto.aspect.FaultRetry;
-import hu.webuni.nyilvantarto.model.Course;
-import hu.webuni.nyilvantarto.model.HistoryData;
-import hu.webuni.nyilvantarto.model.QCourse;
-import hu.webuni.nyilvantarto.model.Student;
+import hu.webuni.nyilvantarto.model.*;
 import hu.webuni.nyilvantarto.repository.CourseRepository;
 import hu.webuni.nyilvantarto.repository.predicate.CoursePredicate;
 import org.hibernate.envers.AuditReader;
@@ -21,6 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.history.Revision;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -30,6 +28,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 
@@ -138,4 +137,21 @@ public class CourseService {
         return AuditReaderFactory.get(entityManager);
     }
 
+
+
+    /*
+    @Transactional
+    @Async
+    public CompletableFuture<List<CourseAVGDTO>> getAVGSemesterOfCOurses(){
+        System.out.println(Thread.currentThread().getName());
+        return CompletableFuture.completedFuture(courseRepository.findAVGSemesterByCourse());
+    }
+*/
+
+    @Transactional
+
+    public List<CourseAVGDTO> getAVGSemesterOfCOurses(){
+        System.out.println(Thread.currentThread().getName());
+        return courseRepository.findAVGSemesterByCourse();
+    }
 }

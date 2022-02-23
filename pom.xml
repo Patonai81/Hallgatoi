@@ -243,6 +243,7 @@
                                 <dateLibrary>java8-localdatetime</dateLibrary>
                                 <configPackage>hu.webuni.nyilvantarto.config</configPackage>
                                 <interfaceOnly>true</interfaceOnly>
+                                <additionalModelTypeAnnotations>@lombok.Builder @lombok.NoArgsConstructor @lombok.AllArgsConstructor</additionalModelTypeAnnotations>
                             </configOptions>
                             <apiPackage>hu.webuni.nyilvantarto.api</apiPackage>
                             <modelPackage>hu.webuni.nyilvantarto.model</modelPackage>

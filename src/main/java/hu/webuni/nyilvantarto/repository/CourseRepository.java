@@ -2,6 +2,7 @@ package hu.webuni.nyilvantarto.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import hu.webuni.nyilvantarto.model.Course;
+import hu.webuni.nyilvantarto.model.CourseAVGDTO;
 import hu.webuni.nyilvantarto.model.QCourse;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,9 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
-import org.springframework.data.repository.history.RevisionRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -66,6 +68,11 @@ public interface CourseRepository extends JpaRepository<Course, Long>, QuerydslP
         });
 
     }
+
+    @Transactional
+    @Query("select NEW hu.webuni.nyilvantarto.model.CourseAVGDTO(c.course_id,avg(s.semester)) from Student s inner join s.courses c group by c.course_id")
+    public List<CourseAVGDTO> findAVGSemesterByCourse();
+
 
 
 

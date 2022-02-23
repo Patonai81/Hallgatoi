@@ -3,10 +3,7 @@ package hu.webuni.nyilvantarto.web.controller;
 import com.querydsl.core.types.Predicate;
 import hu.webuni.nyilvantarto.api.CourseControllerApi;
 import hu.webuni.nyilvantarto.mapper.CourseMapper;
-import hu.webuni.nyilvantarto.model.Course;
-import hu.webuni.nyilvantarto.model.CourseDTO;
-import hu.webuni.nyilvantarto.model.HistoryData;
-import hu.webuni.nyilvantarto.model.HistoryDataCourseDTO;
+import hu.webuni.nyilvantarto.model.*;
 import hu.webuni.nyilvantarto.repository.CourseRepository;
 import hu.webuni.nyilvantarto.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +16,8 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.SortDefault;
 import org.springframework.data.web.querydsl.QuerydslPredicateArgumentResolver;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -30,6 +29,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 
 @RestController
@@ -155,5 +155,9 @@ public class CourseController implements CourseControllerApi {
         return ResponseEntity.ok(result);
     }
 
-
+    //Ezt sajnos nem lehet keverni ide, mert async
+    @Override
+    public ResponseEntity<List<CourseAVGDTO>> getApiCourseAnalytics() {
+        return CourseControllerApi.super.getApiCourseAnalytics();
+    }
 }

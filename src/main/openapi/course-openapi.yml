@@ -490,6 +490,30 @@
           }
         }
       }
+    },
+    "/api/course/analytics": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "course-controller"
+        ],
+        "operationId": "get-api-course-analytics",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseAVG_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -577,6 +601,20 @@
           "date": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "CourseAVG_DTO": {
+        "title": "CourseAVG_DTO",
+        "type": "object",
+        "properties": {
+          "course_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "average": {
+            "type": "number",
+            "format": "double"
           }
         }
       }

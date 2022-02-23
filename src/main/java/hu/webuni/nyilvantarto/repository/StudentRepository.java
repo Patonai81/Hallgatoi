@@ -18,4 +18,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("select s from Student s where s.id= :id")
     public Student findStudentByOwnId(Long id);
 
+
+
+
+
 }
