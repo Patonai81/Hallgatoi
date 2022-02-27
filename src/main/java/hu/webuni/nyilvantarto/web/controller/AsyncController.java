@@ -20,7 +20,7 @@ public class AsyncController {
 
     @GetMapping("/analytics")
     @Async
-    public CompletableFuture<List<CourseAVGDTO>> getApiCourseAnalytics2() {
+    public CompletableFuture<List<CourseAVGDTO>> getApiCourseAnalytics() {
         System.out.println(Thread.currentThread().getName());
         return CompletableFuture.completedFuture(courseService.getAVGSemesterOfCOurses());
     }
