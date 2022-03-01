@@ -3,6 +3,7 @@ package hu.webuni.nyilvantarto.web.controller;
 
 import hu.webuni.nyilvantarto.ws.MessageDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class ChatController {
 
+    @Autowired
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/chat")
