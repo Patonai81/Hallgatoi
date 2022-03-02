@@ -1,0 +1,20 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.freesemesterbackend.webuni.hu/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://remote.ws.freesemesterbackend.webuni.hu/" name="RemainingFreeSemesterServiceService" targetNamespace="http://service.ws.freesemesterbackend.webuni.hu/">
+    <wsdl:import location="http://localhost:8081/services/remaining?wsdl=RemainingFreeSemesterIF.wsdl" namespace="http://remote.ws.freesemesterbackend.webuni.hu/"> </wsdl:import>
+    <wsdl:binding name="RemainingFreeSemesterServiceServiceSoapBinding" type="ns1:RemainingFreeSemesterIF">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getRemainingSemester">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getRemainingSemester">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRemainingSemesterResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="RemainingFreeSemesterServiceService">
+        <wsdl:port binding="tns:RemainingFreeSemesterServiceServiceSoapBinding" name="RemainingFreeSemesterServicePort">
+            <soap:address location="http://localhost:8081/services/remaining"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

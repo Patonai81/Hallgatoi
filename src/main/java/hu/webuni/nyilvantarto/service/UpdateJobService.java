@@ -21,7 +21,7 @@ public class UpdateJobService implements Runnable {
 
 
     @Override
-    @FaultRetry
+   // @FaultRetry
     public void run() {
         studentRepository.findAll().forEach(student -> {
             updateStudent(student);
