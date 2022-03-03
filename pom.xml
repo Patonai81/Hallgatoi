@@ -171,11 +171,47 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
         </dependency>
+        <!--SOAP DEPENDENCY START -->
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>2.0.0</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.soap</groupId>
+            <artifactId>jakarta.xml.soap-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <!--SOAP DEPENDENCY END -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+
+
+
     </dependencies>
 
     <build>
@@ -219,8 +255,8 @@
                             <version>5.3.23.Final</version>
                         </path>
                     </annotationProcessorPaths>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -286,6 +322,13 @@
                         <wsdlUrl>file:src/main/resources/wsdl/remaining.wsdl</wsdlUrl>
                     </wsdlUrls>
                 </configuration>
+               <dependencies>
+                   <dependency>
+                       <groupId>com.sun.xml.ws</groupId>
+                       <artifactId>jaxws-tools</artifactId>
+                       <version>3.0.0-M2</version>
+                   </dependency>
+               </dependencies>
             </plugin>
         </plugins>
     </build>
